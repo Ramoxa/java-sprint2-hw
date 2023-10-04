@@ -10,7 +10,9 @@ public class Main {
 
         reportEngine.printMonthlyReports ();
         reportEngine.printYearlyReports ();
-        reportEngine.getTopName();
+        reportEngine.showMonthlyReportInfo();
+
+        reportEngine.check();
         System.out.println(reportEngine);
     }
 }
