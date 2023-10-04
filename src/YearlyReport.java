@@ -1,13 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class YearlyReport {
 
-
-    int month;
-
-    int amount;
-    boolean isExpence;
-
+    HashMap<Integer, YearlyRecord> records = new HashMap<>();
 }
 
 
