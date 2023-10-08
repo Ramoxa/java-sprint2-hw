@@ -11,4 +11,8 @@ public class Record {
         this.quantity = quantity;
 
     }
+
+    int sum() {
+        return quantity * price;
+    }
 }
