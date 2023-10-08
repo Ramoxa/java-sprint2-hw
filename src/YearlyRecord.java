@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class YearlyRecord {
 
     int month;
@@ -12,6 +10,9 @@ public class YearlyRecord {
         this.earning = earning;
     }
 
-}
+
+    }
+
+
 
 

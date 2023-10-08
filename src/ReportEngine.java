@@ -1,17 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Collections;
 
 public class ReportEngine {
 
     HashMap<Integer, MonthlyReport> monthlyReports = new HashMap<>();
     YearlyReport yearlyReport = new YearlyReport();
-
     FileReader fileReader = new FileReader();
-
     void readYearlyReports() {
-
         String fileName = "y.2021.csv";
         ArrayList<String> strings = fileReader.readFileContents(fileName);
         strings.remove(0);
@@ -63,7 +58,6 @@ public class ReportEngine {
             }
             monthlyReports.put(i, monthlyReport);
         }
-
     }
 
     public void printMonthlyReports() {
@@ -74,7 +68,6 @@ public class ReportEngine {
         System.out.println("Считаны месячные отчеты за: ");
         for (Integer month : monthlyReports.keySet()) {
             System.out.println("Месяц: " + month);
-
         }
     }
 
@@ -84,12 +77,10 @@ public class ReportEngine {
         } else {
             System.out.println("Считан годовой отчет за 2021 г.");
         }
-
     }
 
     // самый прибыльный товар
     public void showMonthlyReportInfo() {
-
         for (int i = 1; i <= 3; i++) {
             Record maxEarning = monthlyReports.get(i).getMaxEarning();
             Record maxExpense = monthlyReports.get(i).getMaxExpense();
@@ -100,40 +91,47 @@ public class ReportEngine {
     }
 
     public void showYearlyReportInfo() {
+        HashMap<Integer, Integer> earnings = new HashMap<>();
+        HashMap<Integer, Integer> expenses = new HashMap<>();
+
         for (int i = 1; i <= 3; i++) {
-            ArrayList<Integer> expenses = null;
-            expenses.add(yearlyReport.records.get(i).expense); // добавил в список все доходы
-            int sizeExpenses = expenses.size();
-            int sumExpense = expenses.stream().mapToInt(Integer::intValue).sum();
-
-            ArrayList <Integer> earnings = null; // добавил в список все траты
-            expenses.add(yearlyReport.records.get(i).earning);
-            int sizeEearnings = earnings.size();
-            int sumEarning = earnings.stream().mapToInt(Integer::intValue).sum();
-
-            int averageExpense  = sumExpense / sizeExpenses; // средний доход
-            int averageУarning = sumEarning / sizeEearnings; // средний расход
-            int profit = sumEarning - sumEarning; // прибыль
-
-            System.out.println ("Прибыль " + profit);
-            System.out.println ("Средний  расход за все имеющиеся операции в году " + averageExpense);
-            System.out.println ("Средний доход за все имеющиеся операции в году " + averageУarning);
+            int earning = yearlyReport.records.get(i).earning;
+            int expense  = yearlyReport.records.get(i).expense;
+           int profit = earning - expense;
+            System.out.println ("Прибыль за " + i + " месяц " + profit);
+            earnings.put(i,earning);
+            expenses.put(i, expense);
         }
-    }
+
+        int sumEarnings = earnings.values().stream().mapToInt(Integer::intValue).sum();
+        int sumeExpense = expenses.values().stream().mapToInt(Integer::intValue).sum();
+        System.out.println ("Доход за год " + sumEarnings);
+        System.out.println ("Расход за год " + sumeExpense);
+
+            int averageEarning = sumEarnings / earnings.size();
+            System.out.println ("Средний доход за все имеющиеся операции в году " +  averageEarning);
+
+            int averageExpense = sumeExpense / expenses.size();
+            System.out.println ("Средний расход за все имеющиеся операции в году " +  averageExpense);
+        }
+
     public void check() {
         for (int i = 1; i <= 3; i++) {
             System.out.println(i);
-            System.out.println(monthlyReports.get(i).sumEarnings());
-            System.out.println(monthlyReports.get(i).sumExpenses());
-            System.out.println(yearlyReport.records.get(i).earning);
-            System.out.println(yearlyReport.records.get(i).expense);
+            System.out.println("Доходы согласно месячному отчету " + monthlyReports.get(i).sumEarnings());
+            System.out.println("Доходы согласно годовому отчету " + yearlyReport.records.get(i).earning);
+            System.out.println("Расходы согласно месячному отчету " + monthlyReports.get(i).sumExpenses());
+            System.out.println("Расходы согласно годовому отчету " + yearlyReport.records.get(i).expense);
+
+            if (monthlyReports.get(i).sumEarnings() == yearlyReport.records.get(i).earning);
+            else if (monthlyReports.get(i).sumExpenses() == yearlyReport.records.get(i).expense) {
+                System.out.println("Отчеты сверены, ошибок не обнаружено");
+            }
+            else {
+                System.out.println("В " + i +" месяце обнаружена ошибка");
+            }
+
         }
-    } }
 
-
-
-
-
-
-
-
+}
+}
