@@ -102,17 +102,22 @@ public class ReportEngine {
     public void showYearlyReportInfo() {
         for (int i = 1; i <= 3; i++) {
             ArrayList<Integer> expenses = null;
-            expenses.add(yearlyReport.records.get(i).expense);
+            expenses.add(yearlyReport.records.get(i).expense); // добавил в список все доходы
+            int sizeExpenses = expenses.size();
             int sumExpense = expenses.stream().mapToInt(Integer::intValue).sum();
 
-            ArrayList <Integer> earnings = null;
+            ArrayList <Integer> earnings = null; // добавил в список все траты
             expenses.add(yearlyReport.records.get(i).earning);
+            int sizeEearnings = earnings.size();
             int sumEarning = earnings.stream().mapToInt(Integer::intValue).sum();
 
-            int profit = sumEarning - sumExpense;
+            int averageExpense  = sumExpense / sizeExpenses; // средний доход
+            int averageУarning = sumEarning / sizeEearnings; // средний расход
+            int profit = sumEarning - sumEarning; // прибыль
 
-            System.out.println (profit);
-
+            System.out.println ("Прибыль " + profit);
+            System.out.println ("Средний  расход за все имеющиеся операции в году " + averageExpense);
+            System.out.println ("Средний доход за все имеющиеся операции в году " + averageУarning);
         }
     }
     public void check() {
