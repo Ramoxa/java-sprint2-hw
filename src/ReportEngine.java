@@ -61,7 +61,6 @@ public class ReportEngine {
     }
 
     public void printMonthlyReports() {
-
         if (monthlyReports.isEmpty()) {
             System.out.println("Нет файлов с месячными отчетами.");
         }
@@ -79,34 +78,44 @@ public class ReportEngine {
         }
     }
 
-    // самый прибыльный товар
     public void showMonthlyReportInfo() {
-        for (int i = 1; i <= 3; i++) {
-            Record maxEarning = monthlyReports.get(i).getMaxEarning();
-            Record maxExpense = monthlyReports.get(i).getMaxExpense();
-            System.out.println("Месяц: " + monthlyReports.get(i).month);
-            System.out.println("Самый прибыльный товар: " + maxEarning.name + " " + maxEarning.sum());
-            System.out.println("Самая большая трата: " + maxExpense.name + " " + maxExpense.sum());
+        if (monthlyReports.isEmpty()) {
+            System.out.println("Нет файлов с месячными отчетами.");
+            System.out.println("Для выполения операции сначала выполните команду 1.");
+            Main.printMenu();
         }
+        else {
+            for (int i = 1; i <= 3; i++) {
+                Record maxEarning = monthlyReports.get(i).getMaxEarning();
+                Record maxExpense = monthlyReports.get(i).getMaxExpense();
+                System.out.println("Месяц: " + monthlyReports.get(i).month);
+                System.out.println("Самый прибыльный товар: " + maxEarning.name + " " + maxEarning.sum());
+                System.out.println("Самая большая трата: " + maxExpense.name + " " + maxExpense.sum());
+            } }
     }
 
     public void showYearlyReportInfo() {
-        HashMap<Integer, Integer> earnings = new HashMap<>();
-        HashMap<Integer, Integer> expenses = new HashMap<>();
+        if (yearlyReport.records.isEmpty()) {
+            System.out.println("Нет файла с годовым отчетом.");
+            System.out.println("Для выполения операции сначала выполните команду 2.");
+            Main.printMenu();
+        } else {
+            HashMap<Integer, Integer> earnings = new HashMap<>();
+            HashMap<Integer, Integer> expenses = new HashMap<>();
 
-        for (int i = 1; i <= 3; i++) {
-            int earning = yearlyReport.records.get(i).earning;
-            int expense  = yearlyReport.records.get(i).expense;
-           int profit = earning - expense;
-            System.out.println ("Прибыль за " + i + " месяц " + profit);
-            earnings.put(i,earning);
-            expenses.put(i, expense);
-        }
+            for (int i = 1; i <= 3; i++) {
+                int earning = yearlyReport.records.get(i).earning;
+                int expense  = yearlyReport.records.get(i).expense;
+                int profit = earning - expense;
+                System.out.println ("Прибыль за " + i + " месяц " + profit);
+                earnings.put(i,earning);
+                expenses.put(i, expense);
+            }
 
-        int sumEarnings = earnings.values().stream().mapToInt(Integer::intValue).sum();
-        int sumeExpense = expenses.values().stream().mapToInt(Integer::intValue).sum();
-        System.out.println ("Доход за год " + sumEarnings);
-        System.out.println ("Расход за год " + sumeExpense);
+            int sumEarnings = earnings.values().stream().mapToInt(Integer::intValue).sum();
+            int sumeExpense = expenses.values().stream().mapToInt(Integer::intValue).sum();
+            System.out.println ("Доход за год " + sumEarnings);
+            System.out.println ("Расход за год " + sumeExpense);
 
             int averageEarning = sumEarnings / earnings.size();
             System.out.println ("Средний доход за все имеющиеся операции в году " +  averageEarning);
@@ -114,8 +123,15 @@ public class ReportEngine {
             int averageExpense = sumeExpense / expenses.size();
             System.out.println ("Средний расход за все имеющиеся операции в году " +  averageExpense);
         }
+    }
 
-    public void check() {
+public  void check () {
+    if ((monthlyReports.isEmpty()) && yearlyReport.records.isEmpty()) {
+        System.out.println("Нет файлов с месячными отчетами.");
+        System.out.println("Для выполения операции сначала выполните команды 1 и 2.");
+        Main.printMenu();
+    }
+    else {
         for (int i = 1; i <= 3; i++) {
             System.out.println(i);
             System.out.println("Доходы согласно месячному отчету " + monthlyReports.get(i).sumEarnings());
@@ -132,6 +148,8 @@ public class ReportEngine {
             }
 
         }
+    }
 
 }
+
 }
